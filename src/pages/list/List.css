@@ -12,10 +12,11 @@
 .listSearch{
     flex: 1;
     background-color: #febb02;
-    padding: 10px;
+    padding: 15px;
     border-radius: 10px;
     position: sticky;
-    top: 10px
+    top: 10px;
+    height: max-content;
 }
 .listTitle {
     font-size: 20px;
