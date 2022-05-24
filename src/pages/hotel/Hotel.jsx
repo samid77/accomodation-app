@@ -1,13 +1,30 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import Header from '../../components/Header/Header';
 import MailList from '../../components/MailList/MailList';
 import Footer from '../../components/Footer/Footer';
 import './Hotel.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faCircleArrowRight, faLocationDot, faCircleArrowLeft, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 const Hotel = () => {
+    const [slideNumber, setSlideNumber] = useState(0);
+    const [open, setOpen] = useState(false);
+    const handleSlider = (idx) => {
+        setSlideNumber(idx);
+        setOpen(true)
+    }
+    const handleMove = (direction) => {
+        let newSliderNumber;
+        if(direction === 'l') {
+            newSliderNumber = slideNumber === 0 ? 5 : slideNumber - 1;
+        } else {
+            newSliderNumber = slideNumber === 5 ? 0 : slideNumber + 1;
+        }
+
+        setSlideNumber(newSliderNumber);
+    }
+
     
     const photos = [
         {
@@ -35,6 +52,15 @@ const Hotel = () => {
             <Navbar />
             <Header type='list' />
             <div className='hotelContainer'>
+                {open && <div className='slider'>
+                    <FontAwesomeIcon icon={faCircleXmark} className='closeIcon' onClick={() => setOpen(false)}/>
+                    <FontAwesomeIcon icon={faCircleArrowLeft} className='arrow' onClick={() => handleMove('l')}/>
+                        <div className='sliderWrapper'>
+                            <img src={photos[slideNumber].src} alt='HotelDetail' className='sliderImg'/>
+                        </div>
+                    <FontAwesomeIcon icon={faCircleArrowRight} className='arrow' onClick={() => handleMove('r')} />
+                </div>
+                }
                 <div className='hotelWrapper'>
                     <button className='bookButton'>Reserve or Book Now</button>
                     <h1 className='hotelTitle'>Grand Hotel</h1>
@@ -49,9 +75,13 @@ const Hotel = () => {
                         Book to stay over Rp.1.500.000 at this property and get a free airport taxi
                     </span>
                     <div className='hotelImages'>
-                        {photos.map(p => (
+                        {photos.map((p, idx) => (
                             <div className='hotelImgWrapper'>
-                                <img src={p.src} alt='HotelImage' className='hotelImg'/>
+                                <img 
+                                    src={p.src} 
+                                    onClick={() => handleSlider(idx)}
+                                    alt='HotelImage' 
+                                    className='hotelImg'/>
                             </div>
                         ))}
                     </div>
