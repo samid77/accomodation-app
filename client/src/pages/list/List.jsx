@@ -7,6 +7,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import Navbar from '../../components/Navbar/Navbar';
 import Header from '../../components/Header/Header';
 import SearchItem from '../../components/SearchItem/SearchItem';
+import useFetch from '../../hooks/useFetch';
 import './List.css';
 
 const List = () => {
@@ -15,6 +16,8 @@ const List = () => {
     const [date, setDate] = useState(location.state.date)
     const [options, setOptions] = useState(location.state.options)
     const [openDate, setOpenDate] = useState(false);
+
+    const {data, loading, error } = useFetch(`http://localhost:8800/api/hotels?city=${destination}`);
     
     return (
         <div>
@@ -69,18 +72,18 @@ const List = () => {
                         <button>Search</button>
                     </div>
                     <div className='listResult'>
-                        <SearchItem />
-                        <SearchItem />
-                        <SearchItem />
-                        <SearchItem />
-                        <SearchItem />
-                        <SearchItem />
-                        <SearchItem />
-                        <SearchItem />
-                        <SearchItem />
-                        <SearchItem />
-                        <SearchItem />
-                        <SearchItem />
+                        {loading 
+                            ? 'Loading' 
+                            : <>
+                                {
+                                    data?.map((d, idx) => (
+                                        <SearchItem 
+                                            key={d._id}
+                                            item={d}
+                                        />
+                                    ))
+                                }</>
+                        }
                     </div>
                 </div>
             </div>

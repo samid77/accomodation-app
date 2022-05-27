@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import Header from '../../components/Header/Header';
 import Featured from '../../components/Featured/Featured';
@@ -18,7 +18,7 @@ const Home = () => {
                 <h1 className='homeTitle'>Browse by Property Type</h1>
                 <PropertyList />
                 <h1 className='homeTitle'>Home Guests Love</h1>
-                <FeaturedProperties />
+                <FeaturedProperties/>
                 <MailList />
                 <Footer />
             </div>

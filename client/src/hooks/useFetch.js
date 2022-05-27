@@ -7,6 +7,7 @@ const useFetch = (url) => {
     const [error, setError] = useState(false);
 
     useEffect(() => {
+        console.log(`this called`)
         const fetchData = async () => {
             setLoading(true);
             try {
